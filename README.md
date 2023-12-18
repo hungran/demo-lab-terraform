@@ -7,3 +7,13 @@
 - [ ] README.md
 - [ ] semantic relesae github action
 - [ ] upload Terraform Cloud as Private/Public Registry Module
+
+# project 1
+
+- [ ] application load balancer
+    - [ ] target group
+- [ ] launch template
+- [ ] auto scaling group
+- [ ]  security group
+    - [ ]  SG ALB
+    - [ ]  SG ASG

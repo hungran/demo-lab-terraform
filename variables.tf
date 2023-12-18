@@ -11,12 +11,6 @@ variable "project_name" {
   description = "project name injected into task"
 }
 
-variable "instance_type" {
-  default     = "t2.micro"
-  type        = string
-  description = "instance type for all EC2 instances"
-}
-
 variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
   type        = string
@@ -71,6 +65,4 @@ variable "natgw_enabled" {
   default = false
 }
 
-variable "user_data_public_instance" {
-  type = string
-}
+

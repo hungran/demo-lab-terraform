@@ -23,16 +23,29 @@ variable "vpc_cidr_block" {
   description = "CIDR block for VPC"
 }
 
-variable "public_cidr_block" {
-  default     = "10.0.1.0/24"
-  type        = string
-  description = "CIDR block for public subnet"
-}
-
-variable "private_cidr_block" {
-  default     = "10.0.2.0/24"
-  type        = string
-  description = "CIDR block for private subnet"
+# subnets = {
+#   public1 = {
+#     cidr_block = 10.0.0.0/24
+#     az = ap-southeast-1a
+#     public = true
+#   },
+#   public2 = {
+#     cidr_block = 10.0.0.0/24
+#     az = ap-southeast-1a
+#     public = true
+#   },
+#  privite1 = {
+# #     cidr_block = 10.0.0.0/24
+# #     az = ap-southeast-1a
+# #     public = f
+# #   }
+# # }
+variable "subnets" {
+  type = map(object({
+    cidr_block = string
+    az = string
+    public = bool
+  }))
 }
 
 variable "route_public_rtb" {

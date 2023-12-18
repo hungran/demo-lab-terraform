@@ -1,4 +1,3 @@
-// Dynamic AMI (no a static ami id)
 data "aws_ami" "ubuntu" {
   most_recent = true
 

@@ -9,23 +9,31 @@ resource "aws_vpc" "vpc" {
 }
 
 resource "aws_subnet" "private_net" {
+   for_each = {
+    for k, v in var.subnets : k => v 
+    if v.public == false
+  }
   vpc_id     = aws_vpc.vpc.id
-  cidr_block = local.private_cidr_block
+  cidr_block = each.value.cidr_block
 
   tags = {
-    Name        = "${local.project_name}-private",
+    Name        = "${local.project_name}-${each.key}",
     Description = "Private subnet for ${local.project_name}"
   }
 }
 
 resource "aws_subnet" "public_net" {
+  for_each = {
+    for k, v in var.subnets : k => v 
+    if v.public == true
+  }
   vpc_id     = aws_vpc.vpc.id
-  cidr_block = local.public_cidr_block
+  cidr_block = each.value.cidr_block
   
   map_public_ip_on_launch = true
 
   tags = {
-    "Name"        = "${local.project_name}-public",
+    "Name"        = "${local.project_name}-${each.key}",
     "Description" = "Public subnet for ${local.project_name}"
   }
 }
@@ -40,6 +48,7 @@ resource "aws_internet_gateway" "igw" {
 
 // NAT GW + Elastic IP for NAT GW
 resource "aws_eip" "nat_ip" {
+  count = var.natgw_enabled ? 1 : 0
   tags = {
     Name = "NAT-EIP"
   }
@@ -48,8 +57,8 @@ resource "aws_eip" "nat_ip" {
 resource "aws_nat_gateway" "main-natgw" {
   count = var.natgw_enabled ? 1 : 0
   
-  allocation_id = aws_eip.nat_ip.id
-  subnet_id     = aws_subnet.public_net.id
+  allocation_id = aws_eip.nat_ip[0].id
+  subnet_id     = local.subnet_id_for_ec2
   
   tags = {
     "Name" = "NatGW",
@@ -91,35 +100,22 @@ resource "aws_route_table" "private_rtb" {
 
 // Route Table association
 resource "aws_route_table_association" "route_public_subnet" {
-  subnet_id      = aws_subnet.public_net.id
+  for_each = {
+    for k, v in var.subnets : k => v 
+    if v.public == true
+  }
+  subnet_id      = aws_subnet.public_net[each.key].id
   route_table_id = aws_route_table.public_rtb.id
 }
 
 resource "aws_route_table_association" "route_private_subnet" {
-  subnet_id      = aws_subnet.private_net.id
+  for_each = {
+    for k, v in var.subnets : k => v 
+    if v.public == false
+  }
+  subnet_id      = aws_subnet.private_net[each.key].id
   route_table_id = aws_route_table.private_rtb.id
 }
 
 
-resource "aws_instance" "public_instance" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = local.instance_type
-  subnet_id                   = aws_subnet.public_net.id
-  
-  user_data                   = try(var.user_data_public_instance, null)
-  associate_public_ip_address = true
-  tags = {
-    Name = "public-instance"
-  }
-}
 
-resource "aws_instance" "private_instance" {
-  ami           = data.aws_ami.ubuntu.id // why not AMI hard code here?
-  instance_type = local.instance_type
-
-  subnet_id = aws_subnet.public_net.id
-
-  tags = {
-    Name = "private-instance"
-  }
-}

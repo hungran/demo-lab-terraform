@@ -1,0 +1,401 @@
+data.aws_ami.ubuntu: Reading...
+module.init.aws_vpc.vpc: Refreshing state... [id=vpc-0e8199b9dc79c3bec]
+data.aws_ami.ubuntu: Read complete after 0s [id=ami-0fea1654c99ae8095]
+module.init.aws_internet_gateway.igw: Refreshing state... [id=igw-0e2bca5b3f40abde4]
+module.init.aws_subnet.public_net["public2"]: Refreshing state... [id=subnet-0795e5624b41aadc8]
+module.init.aws_subnet.public_net["public1"]: Refreshing state... [id=subnet-0b8881a1c66a0318f]
+aws_lb_target_group.alb: Refreshing state... [id=arn:aws:elasticloadbalancing:ap-southeast-1:221765834466:targetgroup/alb/7af81bad024c986a]
+aws_security_group.alb: Refreshing state... [id=sg-05765bc169981045e]
+module.init.aws_route_table.public_rtb: Refreshing state... [id=rtb-0640afcb16503c9ce]
+aws_security_group.asg: Refreshing state... [id=sg-0660b4a024d2f96ac]
+module.init.aws_route_table.private_rtb: Refreshing state... [id=rtb-07d35959f6910154f]
+module.init.aws_route_table_association.route_public_subnet["public2"]: Refreshing state... [id=rtbassoc-08c439080350a12d3]
+module.init.aws_route_table_association.route_public_subnet["public1"]: Refreshing state... [id=rtbassoc-0d8c361e2ee2f9a67]
+aws_instance.public_instance: Refreshing state... [id=i-0c19df334bb501223]
+aws_ami_from_instance.ami: Refreshing state... [id=ami-055445b25538cd9a1]
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  + create
+-/+ destroy and then create replacement
+ <= read (data resources)
+
+Terraform will perform the following actions:
+
+  # data.aws_ami.lab will be read during apply
+  # (depends on a resource or a module with changes pending)
+ <= data "aws_ami" "lab" {
+      + architecture          = (known after apply)
+      + arn                   = (known after apply)
+      + block_device_mappings = (known after apply)
+      + boot_mode             = (known after apply)
+      + creation_date         = (known after apply)
+      + deprecation_time      = (known after apply)
+      + description           = (known after apply)
+      + ena_support           = (known after apply)
+      + executable_users      = [
+          + "self",
+        ]
+      + hypervisor            = (known after apply)
+      + id                    = (known after apply)
+      + image_id              = (known after apply)
+      + image_location        = (known after apply)
+      + image_owner_alias     = (known after apply)
+      + image_type            = (known after apply)
+      + imds_support          = (known after apply)
+      + kernel_id             = (known after apply)
+      + most_recent           = true
+      + name                  = (known after apply)
+      + owner_id              = (known after apply)
+      + owners                = [
+          + "self",
+        ]
+      + platform              = (known after apply)
+      + platform_details      = (known after apply)
+      + product_codes         = (known after apply)
+      + public                = (known after apply)
+      + ramdisk_id            = (known after apply)
+      + root_device_name      = (known after apply)
+      + root_device_type      = (known after apply)
+      + root_snapshot_id      = (known after apply)
+      + sriov_net_support     = (known after apply)
+      + state                 = (known after apply)
+      + state_reason          = (known after apply)
+      + tags                  = (known after apply)
+      + tpm_support           = (known after apply)
+      + usage_operation       = (known after apply)
+      + virtualization_type   = (known after apply)
+
+      + filter {
+          + name   = "name"
+          + values = [
+              + "doing-stack-*",
+            ]
+        }
+      + filter {
+          + name   = "root-device-type"
+          + values = [
+              + "ebs",
+            ]
+        }
+      + filter {
+          + name   = "virtualization-type"
+          + values = [
+              + "hvm",
+            ]
+        }
+    }
+
+  # aws_ami_from_instance.ami must be replaced
+-/+ resource "aws_ami_from_instance" "ami" {
+      ~ architecture         = "x86_64" -> (known after apply)
+      ~ arn                  = "arn:aws:ec2:ap-southeast-1::image/ami-055445b25538cd9a1" -> (known after apply)
+      + boot_mode            = (known after apply)
+      ~ ena_support          = true -> (known after apply)
+      ~ hypervisor           = "xen" -> (known after apply)
+      ~ id                   = "ami-055445b25538cd9a1" -> (known after apply)
+      ~ image_location       = "221765834466/doing-stack-20231218-v1" -> (known after apply)
+      + image_owner_alias    = (known after apply)
+      ~ image_type           = "machine" -> (known after apply)
+      + imds_support         = (known after apply)
+      + kernel_id            = (known after apply)
+      ~ manage_ebs_snapshots = true -> (known after apply)
+        name                 = "doing-stack-20231218-v1"
+      ~ owner_id             = "221765834466" -> (known after apply)
+      + platform             = (known after apply)
+      ~ platform_details     = "Linux/UNIX" -> (known after apply)
+      ~ public               = false -> (known after apply)
+      + ramdisk_id           = (known after apply)
+      ~ root_device_name     = "/dev/sda1" -> (known after apply)
+      ~ root_snapshot_id     = "snap-09cc91412567d193c" -> (known after apply)
+      ~ source_instance_id   = "i-0c19df334bb501223" # forces replacement -> (known after apply) # forces replacement
+      ~ sriov_net_support    = "simple" -> (known after apply)
+      - tags                 = {} -> null
+      ~ tags_all             = {} -> (known after apply)
+      + tpm_support          = (known after apply)
+      ~ usage_operation      = "RunInstances" -> (known after apply)
+      ~ virtualization_type  = "hvm" -> (known after apply)
+
+      - ebs_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 0 -> null
+          - snapshot_id           = "snap-09cc91412567d193c" -> null
+          - throughput            = 0 -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp2" -> null
+        }
+
+      - ephemeral_block_device {
+          - device_name  = "/dev/sdb" -> null
+          - virtual_name = "ephemeral0" -> null
+        }
+      - ephemeral_block_device {
+          - device_name  = "/dev/sdc" -> null
+          - virtual_name = "ephemeral1" -> null
+        }
+    }
+
+  # aws_autoscaling_group.bar will be created
+  + resource "aws_autoscaling_group" "bar" {
+      + arn                              = (known after apply)
+      + availability_zones               = (known after apply)
+      + default_cooldown                 = (known after apply)
+      + desired_capacity                 = 4
+      + force_delete                     = false
+      + force_delete_warm_pool           = false
+      + health_check_grace_period        = 300
+      + health_check_type                = (known after apply)
+      + id                               = (known after apply)
+      + ignore_failed_scaling_activities = false
+      + load_balancers                   = (known after apply)
+      + max_size                         = 3
+      + metrics_granularity              = "1Minute"
+      + min_size                         = 2
+      + name                             = (known after apply)
+      + name_prefix                      = (known after apply)
+      + predicted_capacity               = (known after apply)
+      + protect_from_scale_in            = false
+      + service_linked_role_arn          = (known after apply)
+      + target_group_arns                = [
+          + "arn:aws:elasticloadbalancing:ap-southeast-1:221765834466:targetgroup/alb/7af81bad024c986a",
+        ]
+      + vpc_zone_identifier              = (known after apply)
+      + wait_for_capacity_timeout        = "10m"
+      + warm_pool_size                   = (known after apply)
+
+      + launch_template {
+          + id      = (known after apply)
+          + name    = (known after apply)
+          + version = "$Latest"
+        }
+    }
+
+  # aws_instance.public_instance must be replaced
+-/+ resource "aws_instance" "public_instance" {
+      ~ arn                                  = "arn:aws:ec2:ap-southeast-1:221765834466:instance/i-0c19df334bb501223" -> (known after apply)
+      ~ availability_zone                    = "ap-southeast-1c" -> (known after apply)
+      ~ cpu_core_count                       = 1 -> (known after apply)
+      ~ cpu_threads_per_core                 = 1 -> (known after apply)
+      ~ disable_api_stop                     = false -> (known after apply)
+      ~ disable_api_termination              = false -> (known after apply)
+      ~ ebs_optimized                        = false -> (known after apply)
+      - hibernation                          = false -> null
+      + host_id                              = (known after apply)
+      + host_resource_group_arn              = (known after apply)
+      + iam_instance_profile                 = (known after apply)
+      ~ id                                   = "i-0c19df334bb501223" -> (known after apply)
+      ~ instance_initiated_shutdown_behavior = "stop" -> (known after apply)
+      + instance_lifecycle                   = (known after apply)
+      ~ instance_state                       = "running" -> (known after apply)
+      ~ ipv6_address_count                   = 0 -> (known after apply)
+      ~ ipv6_addresses                       = [] -> (known after apply)
+      + key_name                             = (known after apply)
+      ~ monitoring                           = false -> (known after apply)
+      + outpost_arn                          = (known after apply)
+      + password_data                        = (known after apply)
+      + placement_group                      = (known after apply)
+      ~ placement_partition_number           = 0 -> (known after apply)
+      ~ primary_network_interface_id         = "eni-0ffd367c7a2345eff" -> (known after apply)
+      ~ private_dns                          = "ip-10-0-0-103.ap-southeast-1.compute.internal" -> (known after apply)
+      ~ private_ip                           = "10.0.0.103" -> (known after apply)
+      + public_dns                           = (known after apply)
+      ~ public_ip                            = "13.212.70.8" -> (known after apply)
+      ~ secondary_private_ips                = [] -> (known after apply)
+      ~ security_groups                      = [] -> (known after apply)
+      + spot_instance_request_id             = (known after apply)
+      ~ subnet_id                            = "subnet-0b8881a1c66a0318f" # forces replacement -> (known after apply) # forces replacement
+        tags                                 = {
+            "Name" = "public-instance"
+        }
+      ~ tenancy                              = "default" -> (known after apply)
+      + user_data_base64                     = (known after apply)
+      ~ vpc_security_group_ids               = [
+          - "sg-0945b207290a94f89",
+        ] -> (known after apply)
+        # (8 unchanged attributes hidden)
+
+      - capacity_reservation_specification {
+          - capacity_reservation_preference = "open" -> null
+        }
+
+      - cpu_options {
+          - core_count       = 1 -> null
+          - threads_per_core = 1 -> null
+        }
+
+      - credit_specification {
+          - cpu_credits = "standard" -> null
+        }
+
+      - enclave_options {
+          - enabled = false -> null
+        }
+
+      - maintenance_options {
+          - auto_recovery = "default" -> null
+        }
+
+      - metadata_options {
+          - http_endpoint               = "enabled" -> null
+          - http_protocol_ipv6          = "disabled" -> null
+          - http_put_response_hop_limit = 1 -> null
+          - http_tokens                 = "optional" -> null
+          - instance_metadata_tags      = "disabled" -> null
+        }
+
+      - private_dns_name_options {
+          - enable_resource_name_dns_a_record    = false -> null
+          - enable_resource_name_dns_aaaa_record = false -> null
+          - hostname_type                        = "ip-name" -> null
+        }
+
+      - root_block_device {
+          - delete_on_termination = true -> null
+          - device_name           = "/dev/sda1" -> null
+          - encrypted             = false -> null
+          - iops                  = 100 -> null
+          - tags                  = {} -> null
+          - throughput            = 0 -> null
+          - volume_id             = "vol-0a7ef0e6b9952e30c" -> null
+          - volume_size           = 8 -> null
+          - volume_type           = "gp2" -> null
+        }
+    }
+
+  # aws_launch_template.doing_lab will be created
+  + resource "aws_launch_template" "doing_lab" {
+      + arn                    = (known after apply)
+      + default_version        = (known after apply)
+      + id                     = (known after apply)
+      + image_id               = (known after apply)
+      + instance_type          = "t2.micro"
+      + latest_version         = (known after apply)
+      + name                   = "doing_lab"
+      + name_prefix            = (known after apply)
+      + tags_all               = (known after apply)
+      + user_data              = <<-EOT
+            #!/bin/bash
+            
+            sudo apt install unzip
+            curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+            unzip awscliv2.zip
+            sudo ./aws/install
+            
+            sudo apt-get update
+            sudo apt install nginx -y
+            cd /var/www/html
+            
+            # Download 1 file bat ky tren S3 (su dung role neu co)
+            
+            # aws s3 cp s3://s3-demo/index.html home.html
+            echo "<html>" > index.html
+            
+            echo "<h1>Welcome to CodeStar</h1>" >> index.html
+            echo "<h2>V1.0.0</h2>" >> index.html
+            echo "<h4>You are running instance from this IP (This is for testing purpose only, you should not public this to user):</h4>"
+            status_code=$(curl -s -o /dev/null -w "%{http_code}" http://169.254.169.254/latest/meta-data/)
+            if [[ "$status_code" -eq 200 ]]
+            then
+                export METADATA='http://169.254.169.254'
+            else
+                export TOKEN=`curl -s -X PUT "http://169.254.169.254/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 21600"`
+                export METADATA='-s -H "X-aws-ec2-metadata-token: '$TOKEN'" http://169.254.169.254'    
+            fi
+            echo "<br>Private IP: " >> index.html
+            curl $METADATA/latest/meta-data/local-ipv4 >> index.html
+            
+            echo "<br>Public IP: " >> index.html
+            curl $METADATA/latest/meta-data/public-ipv4 >> index.html 
+            echo "</html>" >> index.html
+        EOT
+      + vpc_security_group_ids = [
+          + "sg-0660b4a024d2f96ac",
+        ]
+    }
+
+  # aws_lb.alb will be created
+  + resource "aws_lb" "alb" {
+      + arn                                                          = (known after apply)
+      + arn_suffix                                                   = (known after apply)
+      + desync_mitigation_mode                                       = "defensive"
+      + dns_name                                                     = (known after apply)
+      + drop_invalid_header_fields                                   = false
+      + enable_deletion_protection                                   = false
+      + enable_http2                                                 = true
+      + enable_tls_version_and_cipher_suite_headers                  = false
+      + enable_waf_fail_open                                         = false
+      + enable_xff_client_port                                       = false
+      + enforce_security_group_inbound_rules_on_private_link_traffic = (known after apply)
+      + id                                                           = (known after apply)
+      + idle_timeout                                                 = 60
+      + internal                                                     = false
+      + ip_address_type                                              = (known after apply)
+      + load_balancer_type                                           = "application"
+      + name                                                         = "alb"
+      + name_prefix                                                  = (known after apply)
+      + preserve_host_header                                         = false
+      + security_groups                                              = [
+          + "sg-05765bc169981045e",
+        ]
+      + subnets                                                      = (known after apply)
+      + tags                                                         = {
+          + "Environment" = "production"
+        }
+      + tags_all                                                     = {
+          + "Environment" = "production"
+        }
+      + vpc_id                                                       = (known after apply)
+      + xff_header_processing_mode                                   = "append"
+      + zone_id                                                      = (known after apply)
+    }
+
+  # aws_lb_listener.http will be created
+  + resource "aws_lb_listener" "http" {
+      + arn               = (known after apply)
+      + id                = (known after apply)
+      + load_balancer_arn = (known after apply)
+      + port              = 80
+      + protocol          = "HTTPS"
+      + ssl_policy        = (known after apply)
+      + tags_all          = (known after apply)
+
+      + default_action {
+          + order            = (known after apply)
+          + target_group_arn = "arn:aws:elasticloadbalancing:ap-southeast-1:221765834466:targetgroup/alb/7af81bad024c986a"
+          + type             = "forward"
+        }
+    }
+
+  # module.init.aws_route_table_association.route_public_subnet["public1"] must be replaced
+-/+ resource "aws_route_table_association" "route_public_subnet" {
+      ~ id             = "rtbassoc-0d8c361e2ee2f9a67" -> (known after apply)
+      ~ subnet_id      = "subnet-0b8881a1c66a0318f" # forces replacement -> (known after apply) # forces replacement
+        # (1 unchanged attribute hidden)
+    }
+
+  # module.init.aws_subnet.public_net["public1"] must be replaced
+-/+ resource "aws_subnet" "public_net" {
+      ~ arn                                            = "arn:aws:ec2:ap-southeast-1:221765834466:subnet/subnet-0b8881a1c66a0318f" -> (known after apply)
+      ~ availability_zone                              = "ap-southeast-1c" -> "ap-southeast-1a" # forces replacement
+      ~ availability_zone_id                           = "apse1-az3" -> (known after apply)
+      - enable_lni_at_device_index                     = 0 -> null
+      ~ id                                             = "subnet-0b8881a1c66a0318f" -> (known after apply)
+      + ipv6_cidr_block_association_id                 = (known after apply)
+      - map_customer_owned_ip_on_launch                = false -> null
+      ~ owner_id                                       = "221765834466" -> (known after apply)
+      ~ private_dns_hostname_type_on_launch            = "ip-name" -> (known after apply)
+        tags                                           = {
+            "Description" = "Public subnet for codestar-lab4"
+            "Name"        = "codestar-lab4-public1"
+        }
+        # (9 unchanged attributes hidden)
+    }
+
+Plan: 8 to add, 0 to change, 4 to destroy.
+
+─────────────────────────────────────────────────────────────────────────────
+
+Note: You didn't use the -out option to save this plan, so Terraform can't
+guarantee to take exactly these actions if you run "terraform apply" now.

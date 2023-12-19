@@ -1,4 +1,9 @@
-output "public_ip" {
-  description = "ID of the public EC2 instance"
-  value       = aws_instance.public_instance.public_ip
+output "public_subnets" {
+  description = "ID of public subnets"
+  value = { for k,v in aws_subnet.public_net : k => v.id }
+}
+
+output "vpc_id" {
+  description = "vpc id"
+  value = aws_vpc.vpc.id
 }

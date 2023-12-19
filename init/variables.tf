@@ -10,10 +10,17 @@ variable "subnets" {
         az = "ap-southeast-1b"
         public = true
     }
-    public2 = {
+    public3 = {
         cidr_block = "10.0.2.0/24"
         az = "ap-southeast-1c"
         public = true
     }
+  }
+}
+
+variable "instance" {
+  default = {
+    type = "t2.micro"
+    subnet = "public1"
   }
 }
